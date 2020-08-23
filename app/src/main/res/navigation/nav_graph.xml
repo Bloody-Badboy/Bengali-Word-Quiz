@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="dev.arpan.bengali.quiz.ui.home.HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/to_nav_quiz"
+            app:destination="@id/nav_quiz" />
+        <action
+            android:id="@+id/to_nav_bookmarked_words"
+            app:destination="@id/nav_bookmarked_words" />
+        <action
+            android:id="@+id/to_nav_theme_dialog"
+            app:destination="@+id/nav_theme_dialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_quiz"
+        android:name="dev.arpan.bengali.quiz.ui.quiz.QuizFragment"
+        tools:layout="@layout/fragment_quiz">
+        <argument
+            android:name="englishToBengali"
+            app:argType="boolean" />
+        <argument
+            android:name="numberOfWords"
+            app:argType="integer" />
+
+        <argument
+            android:name="numberOfOptions"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_bookmarked_words"
+        android:name="dev.arpan.bengali.quiz.ui.bookmark.BookmarkedWordsFragment"
+        tools:layout="@layout/fragment_bookmarked_words" />
+
+    <dialog
+        android:id="@+id/nav_theme_dialog"
+        android:name="dev.arpan.bengali.quiz.ui.theme.ThemeSettingDialogFragment" />
+</navigation>
