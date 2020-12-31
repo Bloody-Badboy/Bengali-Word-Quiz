@@ -3,7 +3,7 @@ package dev.arpan.bengali.quiz.data
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import dev.arpan.bengali.quiz.data.db.AppDatabase
+import dev.arpan.bengali.quiz.data.db.WordsDao
 import dev.arpan.bengali.quiz.data.model.QuizWordItem
 import dev.arpan.bengali.quiz.data.model.Word
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,7 +22,7 @@ interface WordsRepository {
 }
 
 class DefaultWordsRepository(
-    private val database: AppDatabase,
+    private val wordsDao: WordsDao,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : WordsRepository {
 
@@ -32,7 +32,7 @@ class DefaultWordsRepository(
 
     override suspend fun getQuizWord(isEnglishToBengali: Boolean, optionCount: Int): QuizWordItem? {
         val wordList = withContext(dispatcher) {
-            database.wordsDao.selectRandomWords(optionCount)
+            wordsDao.selectRandomWords(optionCount)
         }
         if (wordList.isEmpty()) {
             return null
@@ -61,20 +61,20 @@ class DefaultWordsRepository(
 
     override suspend fun addWordToBookmark(wordId: Int): Boolean {
         return withContext(dispatcher) {
-            database.wordsDao.bookmarkWord(wordId, true) > 0
+            wordsDao.bookmarkWord(wordId, true) > 0
         }
     }
 
     override suspend fun removeWordFromBookmark(wordId: Int): Boolean {
         return withContext(dispatcher) {
-            database.wordsDao.bookmarkWord(wordId, false) > 0
+            wordsDao.bookmarkWord(wordId, false) > 0
         }
     }
 
     override fun bookmarkedWords(): Flow<PagingData<Word>> {
         return Pager(
             config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { database.wordsDao.bookmarkedWordList() }
+            pagingSourceFactory = { wordsDao.bookmarkedWordList() }
         ).flow
     }
 }
