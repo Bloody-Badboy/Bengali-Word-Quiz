@@ -32,10 +32,10 @@ abstract class AppDatabase : RoomDatabase() {
                 }
         }
 
-        private fun buildDatabase(context: Context) = Room.databaseBuilder(
-            context, AppDatabase::class.java, DATABASE_NAME
-        ).createFromAsset(ASSETS_DATABASE)
-            .fallbackToDestructiveMigration()
-            .build()
+        private fun buildDatabase(context: Context) =
+            Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+                .createFromAsset(ASSETS_DATABASE)
+                .fallbackToDestructiveMigration()
+                .build()
     }
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.arpan.bengali.quiz">
 
+    <permission android:name="dev.arpan.bengali.quiz.provider.READ_WRITE" />
+
     <application
         android:name=".WordQuizApplication"
         android:allowBackup="false"
@@ -11,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
@@ -21,6 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".provider.WordsContentProvider"
+            android:authorities="dev.arpan.bengali.quiz.provider"
+            android:exported="true"
+            android:permission="dev.arpan.bengali.quiz.provider.READ_WRITE" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
