@@ -16,13 +16,17 @@
 
 package dev.arpan.bengali.quiz.ui.utils
 
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import dev.arpan.bengali.quiz.R
 import dev.arpan.bengali.quiz.prefs.Theme
+import dev.arpan.bengali.quiz.widget.BookmarkedWordsAppWidget
 
 fun AppCompatActivity.updateForTheme(theme: Theme) = when (theme) {
     Theme.DARK -> delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
@@ -44,3 +48,16 @@ val Context.themeColorOnError: Int
 
 val Context.themeColorError: Int
     get() = getThemeColorAttribute(R.attr.colorError)
+
+fun Context.updateBookmarkedWordsAppWidget() {
+    val widgetIds = AppWidgetManager.getInstance(this.applicationContext)
+        .getAppWidgetIds(ComponentName(this, BookmarkedWordsAppWidget::class.java))
+    if (widgetIds.isNotEmpty()) {
+        sendBroadcast(
+            Intent(this, BookmarkedWordsAppWidget::class.java).apply {
+                action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds)
+            }
+        )
+    }
+}

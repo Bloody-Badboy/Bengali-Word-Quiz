@@ -17,3 +17,8 @@ Home            |  Home (Dark)
 Word Quiz Screen          |  Bookmark Screen
 :-------------------------:|:-------------------------:
 ![](images/quiz.png) | ![](images/bookmark.png)
+
+Word Quiz Screen          
+:-------------------------:
+![](images/widget.png)
+

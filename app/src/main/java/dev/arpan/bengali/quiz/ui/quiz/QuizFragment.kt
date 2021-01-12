@@ -32,6 +32,7 @@ import dev.arpan.bengali.quiz.R
 import dev.arpan.bengali.quiz.databinding.FragmentQuizBinding
 import dev.arpan.bengali.quiz.ui.NavigationDestinationFragment
 import dev.arpan.bengali.quiz.ui.utils.EventObserver
+import dev.arpan.bengali.quiz.ui.utils.updateBookmarkedWordsAppWidget
 
 @AndroidEntryPoint
 class QuizFragment @JvmOverloads constructor(
@@ -83,6 +84,13 @@ class QuizFragment @JvmOverloads constructor(
                 }.show()
             }
         )
+        viewModel.isBookmarked.observe(
+            viewLifecycleOwner,
+            {
+                requireContext().updateBookmarkedWordsAppWidget()
+            }
+        )
+
         viewModel.getQuestion()
 
         return binding.root

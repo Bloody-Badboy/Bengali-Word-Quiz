@@ -31,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.arpan.bengali.quiz.databinding.FragmentBookmarkedWordsBinding
 import dev.arpan.bengali.quiz.ui.NavigationDestinationFragment
 import dev.arpan.bengali.quiz.ui.utils.SwipeToDeleteCallback
+import dev.arpan.bengali.quiz.ui.utils.updateBookmarkedWordsAppWidget
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -53,6 +54,7 @@ class BookmarkedWordsFragment : NavigationDestinationFragment() {
                 val word = bookmarkedWordsAdapter.getWordAt(viewHolder.absoluteAdapterPosition)
                 if (word != null) {
                     viewModel.bookmarkWord(word.id, false)
+                    requireContext().updateBookmarkedWordsAppWidget()
                 }
             }
         })

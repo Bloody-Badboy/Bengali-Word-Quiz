@@ -30,5 +30,8 @@
     <!-- Quiz Fragment-->
     <string name="quiz_toolbar_title">Word %1$d/%2$d</string>
 
+    <!-- App Widget -->
+    <string name="widget_bookmarked_words_title">Bookmarked Words</string>
+
 
 </resources>
