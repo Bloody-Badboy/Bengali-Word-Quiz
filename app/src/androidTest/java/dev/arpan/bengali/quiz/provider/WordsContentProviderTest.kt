@@ -21,6 +21,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
 import dev.arpan.bengali.quiz.WordQuizApplication
+import dev.arpan.bengali.quiz.data.model.Word
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -39,14 +40,27 @@ class WordsContentProviderTest {
     @Test
     fun loads_words_from_assets() {
         val cursor = contentResolver.query(
-            WordsContentProvider.CONTENT_URI,
+            WordsContentProvider.WORDS_CONTENT_URI,
+            null,
+            "${Word.COLUMN_BOOKMARKED} = ? ",
+            arrayOf("1"),
+            null
+        )
+        assertThat(cursor).isNotNull()
+        assertThat(cursor?.count).isGreaterThan(999999)
+        cursor?.close()
+    }
+
+    @Test
+    fun loads_words_from_asset() {
+        val cursor = contentResolver.query(
+            WordsContentProvider.BOOKMARKED_WORDS_CONTENT_URI,
             null,
             null,
             null,
             null
         )
         assertThat(cursor).isNotNull()
-        assertThat(cursor?.count).isGreaterThan(1)
         cursor?.close()
     }
 }

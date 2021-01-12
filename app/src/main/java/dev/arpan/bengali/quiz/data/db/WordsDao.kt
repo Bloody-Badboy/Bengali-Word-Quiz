@@ -40,4 +40,7 @@ interface WordsDao {
 
     @Query("SELECT * FROM ${Word.TABLE_NAME} WHERE ${Word.COLUMN_ID} = :id")
     fun selectById(id: Long): Cursor?
+
+    @Query("SELECT * FROM ${Word.TABLE_NAME} WHERE ${Word.COLUMN_BOOKMARKED} = 1 ORDER BY ${Word.COLUMN_ENGLISH_WORD} ASC")
+    fun selectAllBookmarked(): Cursor?
 }
