@@ -28,13 +28,51 @@ buildscript {
     }
 }
 
+plugins {
+    id("com.diffplug.gradle.spotless") version "4.5.1"
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
     }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
+            freeCompilerArgs += '-include-runtime'
+            freeCompilerArgs +=
+                    "-Xuse-experimental=" +
+                            "kotlin.Experimental," +
+                            "kotlinx.coroutines.ExperimentalCoroutinesApi," +
+                            "kotlinx.coroutines.FlowPreview"
+        }
+    }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+subprojects {
+    apply plugin: "com.diffplug.gradle.spotless"
+    ext.ktlintVer = "0.39.0"
+
+    spotless {
+        kotlin {
+            target("**/*.kt")
+            ktlint(ktlintVer)
+            licenseHeaderFile rootProject.file("copyright.kt")
+        }
+
+        format 'xml', {
+            target '**/*.xml'
+            indentWithSpaces()
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+    }
+
+    tasks.whenTaskAdded {
+        if (name == "preBuild") {
+            mustRunAfter("spotlessCheck")
+        }
+    }
 }

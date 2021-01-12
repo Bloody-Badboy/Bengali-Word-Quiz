@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Arpan Sarkar
+ * Copyright $YEAR Arpan Sarkar
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,3 @@
  * limitations under the License.
  */
 
-package dev.arpan.bengali.quiz.data.model
-
-data class QuizWordItem(
-    val wordId: Int,
-    val word: String,
-    val bookmarked: Boolean,
-    val options: List<Option>
-) {
-    data class Option(
-        val option: String,
-        val correctOption: Boolean = false,
-        var clickable: Boolean = true
-    )
-}

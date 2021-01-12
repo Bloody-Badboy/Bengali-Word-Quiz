@@ -1,3 +1,19 @@
+/*
+ * Copyright 2021 Arpan Sarkar
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.arpan.bengali.quiz.ui.quiz
 
 import android.os.Bundle
@@ -28,7 +44,8 @@ class QuizFragment @JvmOverloads constructor(
     private val args: QuizFragmentArgs by navArgs()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentQuizBinding.inflate(inflater, container, false)
@@ -41,25 +58,31 @@ class QuizFragment @JvmOverloads constructor(
 
         initAdapter()
 
-        viewModel.currentWordIndex.observe(viewLifecycleOwner, {
-            viewModel.setToolbarTitle(
-                getString(
-                    R.string.quiz_toolbar_title,
-                    it,
-                    args.numberOfWords
+        viewModel.currentWordIndex.observe(
+            viewLifecycleOwner,
+            {
+                viewModel.setToolbarTitle(
+                    getString(
+                        R.string.quiz_toolbar_title,
+                        it,
+                        args.numberOfWords
+                    )
                 )
-            )
-        })
+            }
+        )
 
-        viewModel.showFinishedDialog.observe(viewLifecycleOwner, EventObserver {
-            MaterialAlertDialogBuilder(requireContext()).apply {
-                setMessage("Your score: ${viewModel.currentScore}/${args.numberOfWords}")
-                setCancelable(false)
-                setPositiveButton(android.R.string.ok) { _, _ ->
-                    findNavController().navigateUp()
-                }
-            }.show()
-        })
+        viewModel.showFinishedDialog.observe(
+            viewLifecycleOwner,
+            EventObserver {
+                MaterialAlertDialogBuilder(requireContext()).apply {
+                    setMessage("Your score: ${viewModel.currentScore}/${args.numberOfWords}")
+                    setCancelable(false)
+                    setPositiveButton(android.R.string.ok) { _, _ ->
+                        findNavController().navigateUp()
+                    }
+                }.show()
+            }
+        )
         viewModel.getQuestion()
 
         return binding.root
@@ -84,9 +107,12 @@ class QuizFragment @JvmOverloads constructor(
             }
         }
 
-        viewModel.quizWord.observe(viewLifecycleOwner, {
-            binding.btnNext.isEnabled = false
-            optionAdapter.data = it.options
-        })
+        viewModel.quizWord.observe(
+            viewLifecycleOwner,
+            {
+                binding.btnNext.isEnabled = false
+                optionAdapter.data = it.options
+            }
+        )
     }
 }
