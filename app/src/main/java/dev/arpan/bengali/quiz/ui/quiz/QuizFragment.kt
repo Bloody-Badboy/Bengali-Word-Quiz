@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -17,9 +18,11 @@ import dev.arpan.bengali.quiz.ui.NavigationDestinationFragment
 import dev.arpan.bengali.quiz.ui.utils.EventObserver
 
 @AndroidEntryPoint
-class QuizFragment : NavigationDestinationFragment() {
+class QuizFragment @JvmOverloads constructor(
+    factory: ViewModelProvider.Factory? = null
+) : NavigationDestinationFragment() {
 
-    private val viewModel: QuizViewModel by viewModels()
+    val viewModel: QuizViewModel by viewModels(factoryProducer = factory?.let { { factory } })
 
     private lateinit var binding: FragmentQuizBinding
     private val args: QuizFragmentArgs by navArgs()
@@ -27,7 +30,7 @@ class QuizFragment : NavigationDestinationFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentQuizBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

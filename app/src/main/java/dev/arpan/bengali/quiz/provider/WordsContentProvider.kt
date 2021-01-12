@@ -24,7 +24,7 @@ class WordsContentProvider : ContentProvider() {
     private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
     private val wordsDao: WordsDao by lazy {
-        AppDatabase.getInstance(requireContext()).wordsDao
+        AppDatabase.getInstance(checkNotNull(context)).wordsDao
     }
 
     init {
@@ -64,7 +64,7 @@ class WordsContentProvider : ContentProvider() {
                 throw UnsupportedOperationException("")
             }
         }.also {
-            it?.setNotificationUri(requireContext().contentResolver, uri)
+            it?.setNotificationUri(checkNotNull(context).contentResolver, uri)
         }
     }
 

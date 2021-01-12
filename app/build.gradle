@@ -18,7 +18,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "dev.arpan.bengali.quiz"
+        applicationId "dev.arpan.bengali.dev.arpan.bengali.ui.quiz"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
@@ -49,6 +49,17 @@ android {
     }
     buildFeatures {
         dataBinding true
+    }
+    sourceSets {
+        test {
+            java.srcDir 'src/sharedTest/java'
+        }
+        androidTest {
+            java.srcDir 'src/sharedTest/java'
+        }
+    }
+    testOptions {
+        unitTests.includeAndroidResources = true
     }
 }
 
@@ -82,7 +93,7 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.3.0-alpha04'
 
     // Paging
-    implementation 'androidx.paging:paging-runtime:3.0.0-alpha11'
+    implementation 'androidx.paging:paging-runtime-ktx:3.0.0-alpha11'
 
     // Dagger Hilt
     implementation 'com.google.dagger:hilt-android:2.30.1-alpha'
@@ -91,8 +102,47 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:1.0.0-alpha02"
 
     // Testing
+    debugImplementation 'androidx.fragment:fragment-testing:' + rootProject.androidxFragmentVersion
+    debugImplementation project(path: ':testing')
+
+    // Core library
+    debugImplementation 'androidx.test:core-ktx:' + rootProject.coreVersion
+
     testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation 'org.robolectric:robolectric:' + rootProject.robolectricVersion
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
+    // Assertions
+    testImplementation 'androidx.test.ext:junit-ktx:' + rootProject.extJUnitVersion
+    testImplementation 'com.google.truth:truth:' + rootProject.truthVersion
+
+    // Espresso dependencies
+    testImplementation 'androidx.test.espresso:espresso-core:' + rootProject.espressoVersion
+    testImplementation 'androidx.test.espresso:espresso-contrib:'+ rootProject.espressoVersion
+
+    kaptTest 'com.google.auto.service:auto-service:1.0-rc7'
+
+    testImplementation "androidx.navigation:navigation-testing:2.3.2"
+
+
+    // Core library
+    androidTestImplementation 'androidx.test:core-ktx:' + rootProject.coreVersion
+
+    // Assertions
+    androidTestImplementation 'androidx.test.ext:junit-ktx:' + rootProject.extJUnitVersion
+    androidTestImplementation 'com.google.truth:truth:' + rootProject.truthVersion
+
+    // AndroidJUnitRunner and JUnit Rules
+    androidTestImplementation 'androidx.test:runner:' + rootProject.runnerVersion
+
+    // Espresso dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:' + rootProject.espressoVersion
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:'+ rootProject.espressoVersion
+
+    androidTestImplementation 'org.robolectric:annotations:' + rootProject.robolectricVersion
+    androidTestImplementation 'androidx.fragment:fragment-testing:' + rootProject.androidxFragmentVersion
+    androidTestImplementation "androidx.navigation:navigation-testing:2.3.2"
 
 }
